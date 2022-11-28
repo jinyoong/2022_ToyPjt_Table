@@ -1,5 +1,6 @@
 function title() {
   const titleArea = document.createElement('div');
+  titleArea.id = 'title';
 
   const title = document.createElement('h2');
   title.textContent = '2022 토이 프로젝트: 테이블 구현하기';
