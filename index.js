@@ -1,3 +1,4 @@
+// 제목 부여 함수
 function title() {
   const titleArea = document.createElement('div');
   titleArea.id = 'title';
@@ -9,21 +10,24 @@ function title() {
   return titleArea;
 };
 
+// json 데이터를 불러오는 함수
 async function getData() {
   const response = await fetch('./src/data.json');
   return response.json();
 };
 
+// 데이터를 이용해 테이블을 만드는 함수
 function makeTable(datas, start, end) {
   const tableArea = document.createElement('div');
   tableArea.id = 'table';
 
   const table = document.createElement('table');
   
+  // 테이블 헤드 생성 코드
   const tableHead = document.createElement('thead');
   const tableHeadLine = document.createElement('tr');
   
-  Object.keys(datas[0]).forEach(element => {
+  ["이름", "소속팀", "등번호", "포지션"].forEach(element => {
     const tableHeadItem = document.createElement('th');
     tableHeadItem.textContent = element;
     tableHeadLine.appendChild(tableHeadItem);
@@ -32,6 +36,7 @@ function makeTable(datas, start, end) {
   tableHead.appendChild(tableHeadLine);
   table.appendChild(tableHead);
 
+  // 테이블 항목 생성 코드
   const tableBody = document.createElement('tbody');
   
   datas.slice(start, end).forEach(data => {
@@ -94,6 +99,7 @@ function pagiNation(datas, per) {
   pagiNation.id = 'pagination';
 
   const page = document.createElement('div');
+  page.id = 'page';
   
   const moveLeft = document.createElement('button');
   moveLeft.textContent = '<<';
@@ -133,9 +139,13 @@ function removePagiNation() {
   };
 }
 
-const tableData = await getData();
-const root = document.getElementById('root');
-root.appendChild(title());
-root.appendChild(dropDown(tableData));
-root.appendChild(makeTable(tableData, 0, 4));
-root.appendChild(pagiNation(tableData, 4));
+async function init() {
+  const tableData = await getData();
+  const root = document.getElementById('root');
+  root.appendChild(title());
+  root.appendChild(dropDown(tableData));
+  root.appendChild(makeTable(tableData, 0, 4));
+  root.appendChild(pagiNation(tableData, 4));
+}
+
+init();
