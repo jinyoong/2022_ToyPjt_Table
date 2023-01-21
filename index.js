@@ -57,6 +57,40 @@ function makeTable(datas, start, end) {
   return tableArea;
 };
 
+// 테이블 틀을 생성하는 함수
+function createTable() {
+  const baseballTable = document.createElement('table');
+  baseballTable.id = 'baseballTable';
+
+  const tableHead = document.createElement('thead');
+  tableHead.id = 'baseballTableHead';
+  const tableHeadLine = document.createElement('tr');
+
+  ["이름", "소속팀", "등번호", "포지션"].forEach(element => {
+    const tableHeadItem = document.createElement('th');
+    tableHeadItem.textContent = element;
+    tableHeadLine.appendChild(tableHeadItem);
+  })
+
+  tableHead.appendChild(tableHeadLine);
+  baseballTable.appendChild(tableHead);
+
+  const tableBody = document.createElement('tbody');
+  tableBody.id = 'baseballTableBody';
+  const tableBodyLine = document.createElement('tr');
+  
+  ["불러", "오는", "중", "입니다"].forEach(element => {
+    const tableBodyItem = document.createElement('td');
+    tableBodyItem.textContent = element;
+    tableBodyLine.appendChild(tableBodyItem);
+  });
+
+  tableBody.appendChild(tableBodyLine);
+  baseballTable.appendChild(tableBody);
+
+  return baseballTable;
+} 
+
 function removeTable() {
   const table = document.getElementById('table');
 
@@ -145,6 +179,7 @@ async function init() {
   root.appendChild(title());
   root.appendChild(dropDown(tableData));
   root.appendChild(makeTable(tableData, 0, 4));
+  root.appendChild(createTable(tableData));
   root.appendChild(pagiNation(tableData, 4));
 }
 
