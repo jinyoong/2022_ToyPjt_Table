@@ -89,7 +89,24 @@ function createTable() {
   baseballTable.appendChild(tableBody);
 
   return baseballTable;
-} 
+};
+
+// 테이블 항목을 조건에 맞게 채워넣는 함수
+function changeTable(datas, start, end) {
+  const tableBody = document.getElementById('baseballTableBody');
+  
+  let tableBodyItems = '';
+  datas.slice(start, end).forEach(data => {
+    tableBodyItems += `<tr>
+    <td>${data.name}</td>
+    <td>${data.team}</td>
+    <td>${data.number}</td>
+    <td>${data.position}</td>
+    </tr>`
+  })
+
+  tableBody.innerHTML = tableBodyItems;
+}
 
 function removeTable() {
   const table = document.getElementById('table');
@@ -116,10 +133,9 @@ function dropDown(datas) {
   })
 
   dropDown.addEventListener('change', event => {
-    removeTable();
     removePagiNation();
-    root.appendChild(makeTable(datas, 0, event.target.value));
     root.appendChild(pagiNation(datas, event.target.value));
+    changeTable(datas, 0, event.target.value);
   });
 
   dropDownArea.appendChild(dropDown);
@@ -138,8 +154,7 @@ function pagiNation(datas, per) {
   const moveLeft = document.createElement('button');
   moveLeft.textContent = '<<';
   moveLeft.addEventListener('click', () => {
-    removeTable();
-    root.appendChild(makeTable(datas, 0, per));
+    changeTable(datas, 0, per)
   });
   page.appendChild(moveLeft);
 
@@ -147,8 +162,7 @@ function pagiNation(datas, per) {
     const pageElement = document.createElement('button');
     pageElement.textContent = i;
     pageElement.addEventListener('click', () => {
-      removeTable();
-      root.appendChild(makeTable(datas, per * (i - 1), per * i));
+      changeTable(datas, per * (i - 1), per * i)
     });
     page.appendChild(pageElement);
   };
@@ -156,8 +170,7 @@ function pagiNation(datas, per) {
   const moveRight = document.createElement('button');
   moveRight.textContent = '>>';
   moveRight.addEventListener('click', () => {
-    removeTable();
-    root.appendChild(makeTable(datas, per * (pageCount - 1), datas.length));
+    changeTable(datas, per * (pageCount - 1), datas.length)
   });
   page.appendChild(moveRight);
 
@@ -178,8 +191,8 @@ async function init() {
   const root = document.getElementById('root');
   root.appendChild(title());
   root.appendChild(dropDown(tableData));
-  root.appendChild(makeTable(tableData, 0, 4));
-  root.appendChild(createTable(tableData));
+  root.appendChild(createTable());
+  changeTable(tableData, 0, 4);
   root.appendChild(pagiNation(tableData, 4));
 }
 
