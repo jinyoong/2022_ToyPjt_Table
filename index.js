@@ -57,6 +57,14 @@ function makeTable(datas, start, end) {
   return tableArea;
 };
 
+function removeTable() {
+  const table = document.getElementById('table');
+
+  if (table) {
+    table.remove();
+  };
+}
+
 // 테이블 틀을 생성하는 함수
 function createTable() {
   const baseballTable = document.createElement('table');
@@ -106,14 +114,6 @@ function changeTable(datas, start, end) {
   })
 
   tableBody.innerHTML = tableBodyItems;
-}
-
-function removeTable() {
-  const table = document.getElementById('table');
-
-  if (table) {
-    table.remove();
-  };
 }
 
 function dropDown(datas) {
@@ -186,7 +186,23 @@ function removePagiNation() {
   };
 }
 
+function test() {
+  const testTag = document.getElementById('testcode')
+  const innerTextResult = document.getElementById('test');
+  testTag.innerHTML = innerTextResult.innerText
+
+  const testDiv = document.getElementById('testdiv');
+  testDiv.innerText = `
+  <span>안녕<span>
+  <span>하세요<span>
+  `
+
+  const testDiv2 = document.getElementById('testdiv2');
+  testDiv2.innerHTML = innerTextResult.textContent;
+}
+
 async function init() {
+  test()
   const tableData = await getData();
   const root = document.getElementById('root');
   root.appendChild(title());
