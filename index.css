@@ -8,9 +8,14 @@
 
 #title {
   width: 50%;
+  text-align: center;
 }
 
 #table {
   display: flex;
   justify-content: center;
+}
+
+#dropdown {
+  display: flex;
 }

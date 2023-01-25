@@ -118,6 +118,13 @@ function changeTable(datas, start, end) {
 
 function dropDown(datas) {
   const dropDownArea = document.createElement('div');
+  dropDownArea.id = 'dropdown';
+
+  const dropDownTitle = document.createElement('div');
+  dropDownTitle.id = 'dropDownTitle';
+  dropDownTitle.textContent = '한 번에 볼 개수를 선택하세요.';
+
+  dropDownArea.appendChild(dropDownTitle);
 
   const dropDown = document.createElement('select');
   const options = [
@@ -186,23 +193,23 @@ function removePagiNation() {
   };
 }
 
-function test() {
-  const testTag = document.getElementById('testcode')
-  const innerTextResult = document.getElementById('test');
-  testTag.innerHTML = innerTextResult.innerText
+// function test() {
+//   const testTag = document.getElementById('testcode')
+//   const innerTextResult = document.getElementById('test');
+//   testTag.innerHTML = innerTextResult.innerText
 
-  const testDiv = document.getElementById('testdiv');
-  testDiv.innerText = `
-  <span>안녕<span>
-  <span>하세요<span>
-  `
+//   const testDiv = document.getElementById('testdiv');
+//   testDiv.innerText = `
+//   <span>안녕<span>
+//   <span>하세요<span>
+//   `
 
-  const testDiv2 = document.getElementById('testdiv2');
-  testDiv2.innerHTML = innerTextResult.textContent;
-}
+//   const testDiv2 = document.getElementById('testdiv2');
+//   testDiv2.innerHTML = innerTextResult.textContent;
+// }
 
 async function init() {
-  test()
+  // test()
   const tableData = await getData();
   const root = document.getElementById('root');
   root.appendChild(title());
