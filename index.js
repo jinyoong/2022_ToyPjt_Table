@@ -1,3 +1,17 @@
+let tableData = [];
+
+async function init() {
+  // test()
+  tableData = await getData();
+  const root = document.getElementById('root');
+  root.appendChild(title());
+  root.appendChild(dropDown());
+  root.appendChild(sortDropdown());
+  root.appendChild(createTable());
+  changeTable(0, 4);
+  root.appendChild(pagiNation(4));
+}
+
 // 제목 부여 함수
 function title() {
   const titleArea = document.createElement('div');
@@ -17,7 +31,7 @@ async function getData() {
 };
 
 // 데이터를 이용해 테이블을 만드는 함수
-function makeTable(datas, start, end) {
+function makeTable(tableData, start, end) {
   const tableArea = document.createElement('div');
   tableArea.id = 'table';
 
@@ -39,7 +53,7 @@ function makeTable(datas, start, end) {
   // 테이블 항목 생성 코드
   const tableBody = document.createElement('tbody');
   
-  datas.slice(start, end).forEach(data => {
+  tableData.slice(start, end).forEach(data => {
     const tableBodyLine = document.createElement('tr');
     
     Object.values(data).forEach(value => {
@@ -100,11 +114,11 @@ function createTable() {
 };
 
 // 테이블 항목을 조건에 맞게 채워넣는 함수
-function changeTable(datas, start, end) {
+function changeTable(start, end) {
   const tableBody = document.getElementById('baseballTableBody');
   
   let tableBodyItems = '';
-  datas.slice(start, end).forEach(data => {
+  tableData.slice(start, end).forEach(data => {
     tableBodyItems += `<tr>
     <td>${data.name}</td>
     <td>${data.team}</td>
@@ -116,7 +130,7 @@ function changeTable(datas, start, end) {
   tableBody.innerHTML = tableBodyItems;
 }
 
-function dropDown(datas) {
+function dropDown() {
   const dropDownArea = document.createElement('div');
   dropDownArea.id = 'dropdown';
 
@@ -141,8 +155,8 @@ function dropDown(datas) {
 
   dropDown.addEventListener('change', event => {
     removePagiNation();
-    root.appendChild(pagiNation(datas, event.target.value));
-    changeTable(datas, 0, event.target.value);
+    root.appendChild(pagiNation(event.target.value));
+    changeTable(0, event.target.value);
   });
 
   dropDownArea.appendChild(dropDown);
@@ -150,8 +164,8 @@ function dropDown(datas) {
 };
 
 
-function pagiNation(datas, per) {
-  const pageCount = Math.ceil(datas.length / per);
+function pagiNation(per) {
+  const pageCount = Math.ceil(tableData.length / per);
   const pagiNation = document.createElement('div');
   pagiNation.id = 'pagination';
 
@@ -161,7 +175,7 @@ function pagiNation(datas, per) {
   const moveLeft = document.createElement('button');
   moveLeft.textContent = '<<';
   moveLeft.addEventListener('click', () => {
-    changeTable(datas, 0, per)
+    changeTable(0, per)
   });
   page.appendChild(moveLeft);
 
@@ -169,7 +183,7 @@ function pagiNation(datas, per) {
     const pageElement = document.createElement('button');
     pageElement.textContent = i;
     pageElement.addEventListener('click', () => {
-      changeTable(datas, per * (i - 1), per * i)
+      changeTable(per * (i - 1), per * i)
     });
     page.appendChild(pageElement);
   };
@@ -177,7 +191,7 @@ function pagiNation(datas, per) {
   const moveRight = document.createElement('button');
   moveRight.textContent = '>>';
   moveRight.addEventListener('click', () => {
-    changeTable(datas, per * (pageCount - 1), datas.length)
+    changeTable(per * (pageCount - 1), tableData.length)
   });
   page.appendChild(moveRight);
 
@@ -193,7 +207,7 @@ function removePagiNation() {
   };
 }
 
-function sortDropdown(datas) {
+function sortDropdown() {
   const sortDropdownArea = document.createElement('div');
   sortDropdownArea.id = 'sortDropdown';
 
@@ -235,16 +249,5 @@ function sortDropdown(datas) {
 //   testDiv2.innerHTML = innerTextResult.textContent;
 // }
 
-async function init() {
-  // test()
-  const tableData = await getData();
-  const root = document.getElementById('root');
-  root.appendChild(title());
-  root.appendChild(dropDown(tableData));
-  root.appendChild(sortDropdown(tableData));
-  root.appendChild(createTable());
-  changeTable(tableData, 0, 4);
-  root.appendChild(pagiNation(tableData, 4));
-}
 
 init();
