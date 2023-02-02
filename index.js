@@ -193,6 +193,33 @@ function removePagiNation() {
   };
 }
 
+function sortDropdown(datas) {
+  const sortDropdownArea = document.createElement('div');
+  sortDropdownArea.id = 'sortDropdown';
+
+  const sortDropdownTitle = document.createElement('div');
+  sortDropdownTitle.textContent = '원하는 항목을 기준으로 정렬할 수 있습니다';
+
+  const sortDropdown = document.createElement('select');
+  const options = [
+    {value: 'name', label: '이름'},
+    {value: 'team', label: '소속팀'},
+    {value: 'number', label: '등번호'},
+    {value: 'position', label: '포지션'}, 
+  ];
+
+  options.forEach(element => {
+    const option = document.createElement('option');
+    option.value = element.value;
+    option.label = element.label;
+    sortDropdown.appendChild(option);
+  });
+
+  sortDropdownArea.appendChild(sortDropdownTitle);
+  sortDropdownArea.appendChild(sortDropdown);
+  return sortDropdownArea;
+};
+
 // function test() {
 //   const testTag = document.getElementById('testcode')
 //   const innerTextResult = document.getElementById('test');
@@ -214,6 +241,7 @@ async function init() {
   const root = document.getElementById('root');
   root.appendChild(title());
   root.appendChild(dropDown(tableData));
+  root.appendChild(sortDropdown(tableData));
   root.appendChild(createTable());
   changeTable(tableData, 0, 4);
   root.appendChild(pagiNation(tableData, 4));
