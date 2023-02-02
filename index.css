@@ -19,3 +19,7 @@
 #dropdown {
   display: flex;
 }
+
+#sortDropdown {
+  display: flex;
+}

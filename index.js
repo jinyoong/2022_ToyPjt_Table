@@ -9,7 +9,7 @@ async function init() {
   root.appendChild(dropDown());
   root.appendChild(sortDropdown());
   root.appendChild(createTable());
-  changeTable();
+  drawTable();
   root.appendChild(pagiNation());
 }
 
@@ -66,11 +66,13 @@ function createTable() {
 };
 
 // 테이블 항목을 조건에 맞게 채워넣는 함수
-function changeTable() {
+function drawTable(datas) {
   const tableBody = document.getElementById('baseballTableBody');
   
   let tableBodyItems = '';
-  tableData.slice(start, end).forEach(data => {
+  const currentData = datas ?? tableData;
+
+  currentData.slice(start, end).forEach(data => {
     tableBodyItems += `<tr>
     <td>${data.name}</td>
     <td>${data.team}</td>
@@ -111,7 +113,7 @@ function dropDown() {
     per = event.target.value;
     removePagiNation();
     root.appendChild(pagiNation());
-    changeTable();
+    drawTable();
   });
 
   dropDownArea.appendChild(dropDown);
@@ -129,35 +131,28 @@ function pagiNation() {
   
   const moveLeft = document.createElement('button');
   moveLeft.textContent = '<<';
-  moveLeft.addEventListener('click', () => {
-    start = 0;
-    end = per;
-    changeTable();
-  });
+  moveLeft.addEventListener('click', () => changePage(1));
   page.appendChild(moveLeft);
 
   for (let i = 1; i <= pageCount; i++) {
     const pageElement = document.createElement('button');
     pageElement.textContent = i;
-    pageElement.addEventListener('click', () => {
-      start = per * (i - 1);
-      end = per * i;
-      changeTable();
-    });
+    pageElement.addEventListener('click', () => changePage(i));
     page.appendChild(pageElement);
   };
 
   const moveRight = document.createElement('button');
   moveRight.textContent = '>>';
-  moveRight.addEventListener('click', () => {
-    start = per * (pageCount - 1);
-    end = tableData.length;
-    changeTable();
-  });
+  moveRight.addEventListener('click', () => changePage(pageCount));
   page.appendChild(moveRight);
-
   pagiNation.appendChild(page);
   return pagiNation;
+}
+
+function changePage(index) {
+  start = per * (index - 1);
+  end = per * index;
+  drawTable();
 }
 
 function removePagiNation() {
@@ -194,18 +189,18 @@ function sortDropdown() {
   sortDropdownArea.appendChild(sortDropdown);
 
   sortDropdown.addEventListener('change', event => {
-    console.log(event.target.value);
-    console.log(tableData[1][event.target.value], tableData[2][event.target.value])
-    console.log(tableData[1][event.target.value] > tableData[2][event.target.value]);
-    tableData.sort((a, b) => {
+    const sortedData = [...tableData];
+    sortedData.sort((a, b) => {
       if (a[event.target.value] > b[event.target.value]) return 1;
       if (a[event.target.value] < b[event.target.value]) return -1;
       return 0;
     });
+
     start = 0;
     end = per;
-    changeTable();
+    drawTable(sortedData);
   });
+  
   return sortDropdownArea;
 };
 
