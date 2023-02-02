@@ -1,4 +1,5 @@
 let tableData = [];
+let [start, end, per] = [0, 4, 4];
 
 async function init() {
   // test()
@@ -8,8 +9,8 @@ async function init() {
   root.appendChild(dropDown());
   root.appendChild(sortDropdown());
   root.appendChild(createTable());
-  changeTable(0, 4);
-  root.appendChild(pagiNation(4));
+  changeTable();
+  root.appendChild(pagiNation());
 }
 
 // 제목 부여 함수
@@ -29,55 +30,6 @@ async function getData() {
   const response = await fetch('./src/data.json');
   return response.json();
 };
-
-// 데이터를 이용해 테이블을 만드는 함수
-function makeTable(tableData, start, end) {
-  const tableArea = document.createElement('div');
-  tableArea.id = 'table';
-
-  const table = document.createElement('table');
-  
-  // 테이블 헤드 생성 코드
-  const tableHead = document.createElement('thead');
-  const tableHeadLine = document.createElement('tr');
-  
-  ["이름", "소속팀", "등번호", "포지션"].forEach(element => {
-    const tableHeadItem = document.createElement('th');
-    tableHeadItem.textContent = element;
-    tableHeadLine.appendChild(tableHeadItem);
-  });
-
-  tableHead.appendChild(tableHeadLine);
-  table.appendChild(tableHead);
-
-  // 테이블 항목 생성 코드
-  const tableBody = document.createElement('tbody');
-  
-  tableData.slice(start, end).forEach(data => {
-    const tableBodyLine = document.createElement('tr');
-    
-    Object.values(data).forEach(value => {
-      const tableBodyItem = document.createElement('td');
-      tableBodyItem.textContent = value;
-      tableBodyLine.appendChild(tableBodyItem);
-    });
-
-    tableBody.appendChild(tableBodyLine);
-  });
-
-  table.appendChild(tableBody);
-
-  tableArea.appendChild(table);
-  return tableArea;
-};
-
-function removeTable() {
-  const table = document.getElementById('table');
-
-  if (table) {
-    table.remove();
-  };
-}
 
 // 테이블 틀을 생성하는 함수
 function createTable() {
@@ -114,7 +66,7 @@ function createTable() {
 };
 
 // 테이블 항목을 조건에 맞게 채워넣는 함수
-function changeTable(start, end) {
+function changeTable() {
   const tableBody = document.getElementById('baseballTableBody');
   
   let tableBodyItems = '';
@@ -154,9 +106,12 @@ function dropDown() {
   })
 
   dropDown.addEventListener('change', event => {
+    start = 0;
+    end = event.target.value;
+    per = event.target.value;
     removePagiNation();
-    root.appendChild(pagiNation(event.target.value));
-    changeTable(0, event.target.value);
+    root.appendChild(pagiNation());
+    changeTable();
   });
 
   dropDownArea.appendChild(dropDown);
@@ -164,7 +119,7 @@ function dropDown() {
 };
 
 
-function pagiNation(per) {
+function pagiNation() {
   const pageCount = Math.ceil(tableData.length / per);
   const pagiNation = document.createElement('div');
   pagiNation.id = 'pagination';
@@ -175,7 +130,9 @@ function pagiNation(per) {
   const moveLeft = document.createElement('button');
   moveLeft.textContent = '<<';
   moveLeft.addEventListener('click', () => {
-    changeTable(0, per)
+    start = 0;
+    end = per;
+    changeTable();
   });
   page.appendChild(moveLeft);
 
@@ -183,7 +140,9 @@ function pagiNation(per) {
     const pageElement = document.createElement('button');
     pageElement.textContent = i;
     pageElement.addEventListener('click', () => {
-      changeTable(per * (i - 1), per * i)
+      start = per * (i - 1);
+      end = per * i;
+      changeTable();
     });
     page.appendChild(pageElement);
   };
@@ -191,7 +150,9 @@ function pagiNation(per) {
   const moveRight = document.createElement('button');
   moveRight.textContent = '>>';
   moveRight.addEventListener('click', () => {
-    changeTable(per * (pageCount - 1), tableData.length)
+    start = per * (pageCount - 1);
+    end = tableData.length;
+    changeTable();
   });
   page.appendChild(moveRight);
 
@@ -231,6 +192,20 @@ function sortDropdown() {
 
   sortDropdownArea.appendChild(sortDropdownTitle);
   sortDropdownArea.appendChild(sortDropdown);
+
+  sortDropdown.addEventListener('change', event => {
+    console.log(event.target.value);
+    console.log(tableData[1][event.target.value], tableData[2][event.target.value])
+    console.log(tableData[1][event.target.value] > tableData[2][event.target.value]);
+    tableData.sort((a, b) => {
+      if (a[event.target.value] > b[event.target.value]) return 1;
+      if (a[event.target.value] < b[event.target.value]) return -1;
+      return 0;
+    });
+    start = 0;
+    end = per;
+    changeTable();
+  });
   return sortDropdownArea;
 };
 

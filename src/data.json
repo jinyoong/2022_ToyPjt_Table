@@ -2,121 +2,121 @@
   {
     "name": "name1",
     "team": "team1",
-    "number": "17",
+    "number": 17,
     "position": "DH"
   },
   {
     "name": "name2",
     "team": "team1",
-    "number": "54",
+    "number": 54,
     "position": "CF"
   },
   {
     "name": "name3",
     "team": "team1",
-    "number": "14",
+    "number": 14,
     "position": "3B"
   },
   {
     "name": "name4",
     "team": "team1",
-    "number": "35",
+    "number": 35,
     "position": "RF"
   },
   {
     "name": "name5",
     "team": "team1",
-    "number": "27",
+    "number": 27,
     "position": "LF"
   },
   {
     "name": "name6",
     "team": "team1",
-    "number": "2",
+    "number": 2,
     "position": "SS"
   },
   {
     "name": "name7",
     "team": "team1",
-    "number": "53",
+    "number": 53,
     "position": "1B"
   },
   {
     "name": "name8",
     "team": "team1",
-    "number": "16",
+    "number": 16,
     "position": "2B"
   },
   {
     "name": "name9",
     "team": "team1",
-    "number": "21",
+    "number": 21,
     "position": "C"
   },
   {
     "name": "name10",
     "team": "team1",
-    "number": "29",
+    "number": 29,
     "position": "SP"
   },
   {
     "name": "name11",
     "team": "team2",
-    "number": "10",
+    "number": 10,
     "position": "LF"
   },
   {
     "name": "name12",
     "team": "team2",
-    "number": "19",
+    "number": 19,
     "position": "DH"
   },
   {
     "name": "name13",
     "team": "team2",
-    "number": "51",
+    "number": 51,
     "position": "CF"
   },
   {
     "name": "name14",
     "team": "team2",
-    "number": "3",
+    "number": 3,
     "position": "2B"
   },
   {
     "name": "name15",
     "team": "team2",
-    "number": "66",
+    "number": 66,
     "position": "RF"
   },
   {
     "name": "name16",
     "team": "team2",
-    "number": "27",
+    "number": 27,
     "position": "1B"
   },
   {
     "name": "name17",
     "team": "team2",
-    "number": "56",
+    "number": 56,
     "position": "C"
   },
   {
     "name": "name18",
     "team": "team2",
-    "number": "33",
+    "number": 33,
     "position": "SS"
   },
   {
     "name": "name19",
     "team": "team2",
-    "number": "24",
+    "number": 24,
     "position": "3B"
   },
   {
     "name": "name20",
     "team": "team2",
-    "number": "41",
+    "number": 41,
     "position": "SP"
   }
 ]
