@@ -1,5 +1,7 @@
 let tableData = [];
+let sortState = [0, 0, 0, 0];
 let [start, end, per] = [0, 4, 4];
+const sortIcon = ['=', '+', '-'];
 
 async function init() {
   // test()
@@ -7,6 +9,7 @@ async function init() {
   const root = document.getElementById('root');
   root.appendChild(title());
   root.appendChild(dropDown());
+  root.appendChild(sortButton(0));
   root.appendChild(sortDropdown());
   root.appendChild(createTable());
   drawTable();
@@ -204,20 +207,16 @@ function sortDropdown() {
   return sortDropdownArea;
 };
 
-// function test() {
-//   const testTag = document.getElementById('testcode')
-//   const innerTextResult = document.getElementById('test');
-//   testTag.innerHTML = innerTextResult.innerText
+function sortButton(idx) {
+  const sortButton = document.createElement('button');
+  sortButton.id = 'sortButton';
+  sortButton.textContent = sortIcon[sortState[idx]];
 
-//   const testDiv = document.getElementById('testdiv');
-//   testDiv.innerText = `
-//   <span>안녕<span>
-//   <span>하세요<span>
-//   `
-
-//   const testDiv2 = document.getElementById('testdiv2');
-//   testDiv2.innerHTML = innerTextResult.textContent;
-// }
-
+  sortButton.addEventListener('click', () => {
+    sortState[idx] = (sortState[idx] + 1) % 3;
+    sortButton.textContent = sortIcon[sortState[idx]];
+  })
+  return sortButton;
+};
 
 init();
