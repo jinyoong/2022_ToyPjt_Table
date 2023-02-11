@@ -1,3 +1,6 @@
+import getData from './src/components/getData.js';
+import { createTable, drawTable } from './src/components/table.js';
+
 let tableData = [];
 let sortState = [0, 0, 0, 0];
 let [start, end, per] = [0, 4, 4];
@@ -6,13 +9,14 @@ const sortIcon = ['=', '+', '-'];
 async function init() {
   // test()
   tableData = await getData();
+  console.log(tableData);
   const root = document.getElementById('root');
   root.appendChild(title());
   root.appendChild(dropDown());
   root.appendChild(sortButton(0));
   root.appendChild(sortDropdown());
-  root.appendChild(createTable());
-  drawTable();
+  createTable();
+  drawTable(tableData, 0, 4);
   root.appendChild(pagiNation());
 }
 
@@ -27,65 +31,6 @@ function title() {
   titleArea.appendChild(title);
   return titleArea;
 };
-
-// json 데이터를 불러오는 함수
-async function getData() {
-  const response = await fetch('./src/data.json');
-  return response.json();
-};
-
-// 테이블 틀을 생성하는 함수
-function createTable() {
-  const baseballTable = document.createElement('table');
-  baseballTable.id = 'baseballTable';
-
-  const tableHead = document.createElement('thead');
-  tableHead.id = 'baseballTableHead';
-  const tableHeadLine = document.createElement('tr');
-
-  ["이름", "소속팀", "등번호", "포지션"].forEach(element => {
-    const tableHeadItem = document.createElement('th');
-    tableHeadItem.textContent = element;
-    tableHeadLine.appendChild(tableHeadItem);
-  })
-
-  tableHead.appendChild(tableHeadLine);
-  baseballTable.appendChild(tableHead);
-
-  const tableBody = document.createElement('tbody');
-  tableBody.id = 'baseballTableBody';
-  const tableBodyLine = document.createElement('tr');
-  
-  ["불러", "오는", "중", "입니다"].forEach(element => {
-    const tableBodyItem = document.createElement('td');
-    tableBodyItem.textContent = element;
-    tableBodyLine.appendChild(tableBodyItem);
-  });
-
-  tableBody.appendChild(tableBodyLine);
-  baseballTable.appendChild(tableBody);
-
-  return baseballTable;
-};
-
-// 테이블 항목을 조건에 맞게 채워넣는 함수
-function drawTable(datas) {
-  const tableBody = document.getElementById('baseballTableBody');
-  
-  let tableBodyItems = '';
-  const currentData = datas ?? tableData;
-
-  currentData.slice(start, end).forEach(data => {
-    tableBodyItems += `<tr>
-    <td>${data.name}</td>
-    <td>${data.team}</td>
-    <td>${data.number}</td>
-    <td>${data.position}</td>
-    </tr>`
-  })
-
-  tableBody.innerHTML = tableBodyItems;
-}
 
 function dropDown() {
   const dropDownArea = document.createElement('div');
