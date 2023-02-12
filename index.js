@@ -1,7 +1,9 @@
 import getData from './src/components/getData.js';
 import { createTable, drawTable } from './src/components/table.js';
+import { pagination, removePagination } from './src/components/page.js';
 
 let tableData = [];
+let currentPage = 1;
 let sortState = [0, 0, 0, 0];
 let [start, end, per] = [0, 4, 4];
 const sortIcon = ['=', '+', '-'];
@@ -17,7 +19,7 @@ async function init() {
   root.appendChild(sortDropdown());
   createTable();
   drawTable(tableData, 0, 4);
-  root.appendChild(pagiNation());
+  pagination(tableData, 4, currentPage);
 }
 
 // 제목 부여 함수
@@ -60,7 +62,7 @@ function dropDown() {
     end = event.target.value;
     per = event.target.value;
     removePagiNation();
-    root.appendChild(pagiNation());
+    root.appendChild(pagiation());
     drawTable();
   });
 
@@ -68,48 +70,57 @@ function dropDown() {
   return dropDownArea;
 };
 
+function changePage(clickedPage) {
+  console.log(clickedPage);
 
-function pagiNation() {
-  const pageCount = Math.ceil(tableData.length / per);
-  const pagiNation = document.createElement('div');
-  pagiNation.id = 'pagination';
+  if (clickedPage === '<<') currentPage = 1;
+  else if (clickedPage === '>>') currentPage = 5;
+  else currentPage = Number(clickedPage);
 
-  const page = document.createElement('div');
-  page.id = 'page';
+  console.log(currentPage);
+};
+
+// function pagiNation() {
+//   const pageCount = Math.ceil(tableData.length / per);
+//   const pagiNation = document.createElement('div');
+//   pagiNation.id = 'pagination';
+
+//   const page = document.createElement('div');
+//   page.id = 'page';
   
-  const moveLeft = document.createElement('button');
-  moveLeft.textContent = '<<';
-  moveLeft.addEventListener('click', () => changePage(1));
-  page.appendChild(moveLeft);
+//   const moveLeft = document.createElement('button');
+//   moveLeft.textContent = '<<';
+//   moveLeft.addEventListener('click', () => changePage(1));
+//   page.appendChild(moveLeft);
 
-  for (let i = 1; i <= pageCount; i++) {
-    const pageElement = document.createElement('button');
-    pageElement.textContent = i;
-    pageElement.addEventListener('click', () => changePage(i));
-    page.appendChild(pageElement);
-  };
+//   for (let i = 1; i <= pageCount; i++) {
+//     const pageElement = document.createElement('button');
+//     pageElement.textContent = i;
+//     pageElement.addEventListener('click', () => changePage(i));
+//     page.appendChild(pageElement);
+//   };
 
-  const moveRight = document.createElement('button');
-  moveRight.textContent = '>>';
-  moveRight.addEventListener('click', () => changePage(pageCount));
-  page.appendChild(moveRight);
-  pagiNation.appendChild(page);
-  return pagiNation;
-}
+//   const moveRight = document.createElement('button');
+//   moveRight.textContent = '>>';
+//   moveRight.addEventListener('click', () => changePage(pageCount));
+//   page.appendChild(moveRight);
+//   pagiNation.appendChild(page);
+//   return pagiNation;
+// }
 
-function changePage(index) {
-  start = per * (index - 1);
-  end = per * index;
-  drawTable();
-}
+// function changePage(index) {
+//   start = per * (index - 1);
+//   end = per * index;
+//   drawTable();
+// }
 
-function removePagiNation() {
-  const pagiNation = document.getElementById('pagination');
+// function removePagiNation() {
+//   const pagiNation = document.getElementById('pagination');
 
-  if (pagiNation) {
-    pagiNation.remove();
-  };
-}
+//   if (pagiNation) {
+//     pagiNation.remove();
+//   };
+// }
 
 function sortDropdown() {
   const sortDropdownArea = document.createElement('div');
@@ -165,3 +176,5 @@ function sortButton(idx) {
 };
 
 init();
+
+export { changePage };
