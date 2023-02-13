@@ -1,80 +1,36 @@
 import getData from './src/components/getData.js';
 import { createTable, drawTable } from './src/components/table.js';
 import { pagination, removePagination } from './src/components/page.js';
-import { countDropdown } from './src/components/dropdown.js';
+import { countDropdown, createSortIcons } from './src/components/dropdown.js';
 
 let tableData = [];
 let currentPage = 1;
 let per = 4;
-let sortState = [0, 0, 0, 0];
 let [start, end] = [0, 4];
-const sortIcon = ['=', '+', '-'];
 
 async function init() {
-  // test()
-  tableData = await getData();
-  console.log(tableData);
   const root = document.getElementById('root');
-  root.appendChild(title());
-  root.appendChild(dropDown());
+  tableData = await getData();
+  title();
   root.appendChild(sortButton(0));
-  root.appendChild(sortDropdown());
   countDropdown();
   createTable();
   drawTable(tableData, 0, 4);
   pagination(tableData, 4, currentPage);
-}
+  createSortIcons();
+};
 
 // 제목 부여 함수
 function title() {
-  const titleArea = document.createElement('div');
-  titleArea.id = 'title';
-
   const title = document.createElement('h2');
+  title.id = 'title';
   title.textContent = '2022 토이 프로젝트: 테이블 구현하기';
 
-  titleArea.appendChild(title);
-  return titleArea;
-};
-
-function dropDown() {
-  const dropDownArea = document.createElement('div');
-  dropDownArea.id = 'dropdown';
-
-  const dropDownTitle = document.createElement('div');
-  dropDownTitle.id = 'dropDownTitle';
-  dropDownTitle.textContent = '한 번에 볼 개수를 선택하세요.';
-
-  dropDownArea.appendChild(dropDownTitle);
-
-  const dropDown = document.createElement('select');
-  const options = [
-    {value: 4, label: '4개씩'},
-    {value: 8, label: '8개씩'},
-  ];
-
-  options.forEach(element => {
-    const option = document.createElement('option');
-    option.value = element.value;
-    option.textContent = element.label;
-    dropDown.appendChild(option);
-  })
-
-  dropDown.addEventListener('change', event => {
-    start = 0;
-    end = event.target.value;
-    per = event.target.value;
-    removePagiNation();
-    root.appendChild(pagiation());
-    drawTable();
-  });
-
-  dropDownArea.appendChild(dropDown);
-  return dropDownArea;
+  root.appendChild(title);
 };
 
 function changePage(clickedPage) {
-  console.log(clickedPage);
+  console.log(`클릭한 페이지 : ${clickedPage}`);
 
   if (clickedPage === '<<') currentPage = 1;
   else if (clickedPage === '>>') currentPage = Math.ceil(tableData.length / per);
