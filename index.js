@@ -1,11 +1,13 @@
 import getData from './src/components/getData.js';
 import { createTable, drawTable } from './src/components/table.js';
 import { pagination, removePagination } from './src/components/page.js';
+import { countDropdown } from './src/components/dropdown.js';
 
 let tableData = [];
 let currentPage = 1;
+let per = 4;
 let sortState = [0, 0, 0, 0];
-let [start, end, per] = [0, 4, 4];
+let [start, end] = [0, 4];
 const sortIcon = ['=', '+', '-'];
 
 async function init() {
@@ -17,6 +19,7 @@ async function init() {
   root.appendChild(dropDown());
   root.appendChild(sortButton(0));
   root.appendChild(sortDropdown());
+  countDropdown();
   createTable();
   drawTable(tableData, 0, 4);
   pagination(tableData, 4, currentPage);
@@ -74,53 +77,20 @@ function changePage(clickedPage) {
   console.log(clickedPage);
 
   if (clickedPage === '<<') currentPage = 1;
-  else if (clickedPage === '>>') currentPage = 5;
+  else if (clickedPage === '>>') currentPage = Math.ceil(tableData.length / per);
   else currentPage = Number(clickedPage);
 
-  console.log(currentPage);
+  drawTable(tableData, (currentPage - 1) * per, currentPage * per);
 };
 
-// function pagiNation() {
-//   const pageCount = Math.ceil(tableData.length / per);
-//   const pagiNation = document.createElement('div');
-//   pagiNation.id = 'pagination';
+function changePer(changedPer) {
+  console.log(`바꾼 표시개수 : ${changedPer}`);
 
-//   const page = document.createElement('div');
-//   page.id = 'page';
-  
-//   const moveLeft = document.createElement('button');
-//   moveLeft.textContent = '<<';
-//   moveLeft.addEventListener('click', () => changePage(1));
-//   page.appendChild(moveLeft);
-
-//   for (let i = 1; i <= pageCount; i++) {
-//     const pageElement = document.createElement('button');
-//     pageElement.textContent = i;
-//     pageElement.addEventListener('click', () => changePage(i));
-//     page.appendChild(pageElement);
-//   };
-
-//   const moveRight = document.createElement('button');
-//   moveRight.textContent = '>>';
-//   moveRight.addEventListener('click', () => changePage(pageCount));
-//   page.appendChild(moveRight);
-//   pagiNation.appendChild(page);
-//   return pagiNation;
-// }
-
-// function changePage(index) {
-//   start = per * (index - 1);
-//   end = per * index;
-//   drawTable();
-// }
-
-// function removePagiNation() {
-//   const pagiNation = document.getElementById('pagination');
-
-//   if (pagiNation) {
-//     pagiNation.remove();
-//   };
-// }
+  per = changedPer;
+  drawTable(tableData, 0, per);
+  removePagination();
+  pagination(tableData, per);
+};
 
 function sortDropdown() {
   const sortDropdownArea = document.createElement('div');
@@ -177,4 +147,4 @@ function sortButton(idx) {
 
 init();
 
-export { changePage };
+export { changePage, changePer };
