@@ -23,3 +23,11 @@
 #sortDropdown {
   display: flex;
 }
+
+.pageButton:hover {
+  cursor: pointer;
+}
+
+.sortIcon:hover {
+  cursor: pointer;
+}
