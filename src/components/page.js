@@ -1,6 +1,6 @@
 import { changePage } from "../../index.js";
 
-function pagination(data, per, currentPage) {
+function pagination(data, per) {
   const root = document.getElementById('root');
   const pageCount = Math.ceil(data.length / per);
   const pagiNation = document.createElement('div');
