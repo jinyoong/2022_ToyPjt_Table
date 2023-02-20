@@ -1,6 +1,6 @@
 import { changePage } from "../../index.js";
 
-function pagination(data, per) {
+function pagination(data, per, currentPage) {
   const root = document.getElementById('root');
   const pageCount = Math.ceil(data.length / per);
   const pagiNation = document.createElement('div');
@@ -14,6 +14,11 @@ function pagination(data, per) {
   for (let i = 1; i <= pageCount; i++) {
     const pageButton = document.createElement('button');
     pageButton.className = 'pageButton';
+
+    if (i === currentPage) {
+      pageButton.className += ' highlight';
+    };
+
     pageButton.textContent = i;
     pagiNation.appendChild(pageButton);
   };
@@ -29,7 +34,9 @@ function pagination(data, per) {
 };
 
 function pageButton(event) {
-  changePage(event.target.textContent);
+  if (event.target.tagName === 'BUTTON') {
+    changePage(event.target.textContent);
+  };
 };
 
 function removePagination() {

@@ -24,8 +24,23 @@
   display: flex;
 }
 
+#pagination {
+  display: flex;
+  column-gap: 5px;
+}
+
+.pageButton {
+  border-style: solid;
+  border-radius: 5px;
+  background-color: beige;
+}
+
 .pageButton:hover {
   cursor: pointer;
+}
+
+.highlight {
+  background-color: aquamarine;
 }
 
 .sortIcon:hover {
