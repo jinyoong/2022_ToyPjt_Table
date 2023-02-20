@@ -11,9 +11,26 @@
   text-align: center;
 }
 
-#table {
-  display: flex;
-  justify-content: center;
+.table {
+  width: 500px;
+  text-align: center;
+}
+
+th, td {
+  border-bottom: 1px solid;
+  padding: 5px;
+}
+
+.tableHeadItemName {
+  display: inline-block;
+}
+
+.tableHeadItemName:hover {
+  cursor: pointer;
+}
+
+.head-highlight {
+  color: rgb(255, 193, 60);
 }
 
 #dropdown {
@@ -40,9 +57,5 @@
 }
 
 .highlight {
-  background-color: aquamarine;
-}
-
-.sortIcon:hover {
-  cursor: pointer;
+  background-color: rgb(255, 193, 60);
 }

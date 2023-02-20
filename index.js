@@ -1,7 +1,7 @@
 import getData from './src/components/getData.js';
 import { createTable, drawTable } from './src/components/table.js';
 import { pagination, removePagination } from './src/components/page.js';
-import { countDropdown, createSortIcons, sortData } from './src/components/dropdown.js';
+import { countDropdown, createSortIcons } from './src/components/dropdown.js';
 
 let tableData = [];
 let currentPage = 1;
