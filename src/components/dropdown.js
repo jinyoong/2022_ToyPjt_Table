@@ -1,7 +1,7 @@
 import getData from "./getData.js"; 
 import { changePer, dataSort } from "../../index.js";
 
-const sortIcon = ['↕', '↓', '↑'];
+const sortIcon = ['↕', '↑', '↓'];
 const sortState = [0, 0, 0, 0];
 const originalData = await getData();
 const originalDataKeys = Object.keys(originalData[0]);

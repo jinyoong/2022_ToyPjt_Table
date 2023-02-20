@@ -8,7 +8,6 @@ let currentPage = 1;
 let per = 4;
 
 async function init() {
-  const root = document.getElementById('root');
   tableData = await getData();
   title();
   countDropdown();
@@ -35,6 +34,8 @@ function changePage(clickedPage) {
   else currentPage = Number(clickedPage);
 
   drawTable(tableData, (currentPage - 1) * per, currentPage * per);
+  removePagination();
+  pagination(tableData, per, currentPage);
 };
 
 function changePer(changedPer) {
