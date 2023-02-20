@@ -36,13 +36,11 @@ function createSortIcons() {
   const tableHeadItems = document.getElementsByTagName('th');
 
   for (let i = 0; i < tableHeadItems.length; i++) {
-    const tableHeadItem = tableHeadItems[i];
-    
+    const tableHeadItem = tableHeadItems[i].firstChild;
     const sortIconElement = document.createElement('span');
     sortIconElement.id = `sortIcon-${i}`;
     sortIconElement.className = 'sortIcon';
     sortIconElement.textContent = sortIcon[sortState[i]];
-    sortIconElement.addEventListener('click', changeSortState)
 
     tableHeadItem.appendChild(sortIconElement);
   };
@@ -54,12 +52,22 @@ function drawSortIcon(index) {
 };
 
 function changeSortState(event) {
-  console.log(`${event.target.id}의 정렬 상태를 변경합니다.`);
-  const targetIndex = Number(event.target.id.split('-')[1]);
+  console.log(`${event.currentTarget.id}의 정렬 상태를 변경합니다.`);
+  const targetIndex = Number(event.currentTarget.id.split('-')[1]);
+  console.log(targetIndex)
 
   for (let i = 0; i < 4; i++) {
-    if (i === targetIndex) sortState[i] = (sortState[i] + 1) % 3;
-    else sortState[i] = 0;
+    if (i === targetIndex) {
+      sortState[i] = (sortState[i] + 1) % 3;
+      const tableHeadItem = document.getElementById(`tableHeadItemName-${i}`);
+      tableHeadItem.className += ' head-highlight'
+    } else {
+      sortState[i] = 0
+      const tableHeadItem = document.getElementById(`tableHeadItemName-${i}`);
+      tableHeadItem.classList.remove('head-highlight')
+    };
+
+    
 
     drawSortIcon(i);
   };
@@ -92,4 +100,4 @@ function sortData(column) {
   return;
 }
 
-export { countDropdown, createSortIcons, sortData };
+export { countDropdown, createSortIcons, changeSortState, sortData };

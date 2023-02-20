@@ -1,3 +1,5 @@
+import { changeSortState } from "./dropdown.js";
+
 function createTable() {
   const root = document.getElementById('root');
   const table = document.createElement('table');
@@ -7,9 +9,16 @@ function createTable() {
   tableHead.className = 'thead';
 
   const tableHeadLine = document.createElement('tr');
-  ['이름', '소속팀', '등번호', '포지션'].forEach(element => {
+  ['이름', '소속팀', '등번호', '포지션'].forEach((element, index) => {
     const tableHeadItem = document.createElement('th');
-    tableHeadItem.textContent = element;
+    const tableHeadItemName = document.createElement('div');
+
+    tableHeadItemName.id = `tableHeadItemName-${index}`;
+    tableHeadItemName.className = 'tableHeadItemName';
+    tableHeadItemName.textContent = element;
+    tableHeadItemName.addEventListener('click', changeSortState);
+
+    tableHeadItem.appendChild(tableHeadItemName);
     tableHeadLine.appendChild(tableHeadItem);
   });
 
