@@ -54,20 +54,23 @@ function drawSortIcon(index) {
 function changeSortState(event) {
   console.log(`${event.currentTarget.id}의 정렬 상태를 변경합니다.`);
   const targetIndex = Number(event.currentTarget.id.split('-')[1]);
-  console.log(targetIndex)
 
   for (let i = 0; i < 4; i++) {
+
     if (i === targetIndex) {
       sortState[i] = (sortState[i] + 1) % 3;
       const tableHeadItem = document.getElementById(`tableHeadItemName-${i}`);
-      tableHeadItem.className += ' head-highlight'
+
+      if (sortState[i] !== 0) {
+        tableHeadItem.className += ' head-highlight';
+      } else {
+        tableHeadItem.classList.remove('head-highlight');
+      };
     } else {
       sortState[i] = 0
       const tableHeadItem = document.getElementById(`tableHeadItemName-${i}`);
-      tableHeadItem.classList.remove('head-highlight')
+      tableHeadItem.classList.remove('head-highlight');
     };
-
-    
 
     drawSortIcon(i);
   };

@@ -21,6 +21,7 @@
 .table {
   width: 500px;
   text-align: center;
+  border-collapse: collapse;
 }
 
 th, td {
