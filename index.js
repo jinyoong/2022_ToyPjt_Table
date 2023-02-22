@@ -51,6 +51,7 @@ function changePer(changedPer) {
 function dataSort(sortedData) {
   tableData = sortedData;
   console.log('데이터 정렬 완료');
+  currentPage = 1;
 
   drawTable(tableData, (currentPage - 1) * per, currentPage * per);
   removePagination();
