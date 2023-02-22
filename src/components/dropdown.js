@@ -8,6 +8,11 @@ const originalDataKeys = Object.keys(originalData[0]);
 
 function countDropdown() {
   const root = document.getElementById('root');
+
+  const countDropdownArea = document.createElement('div');
+  countDropdownArea.textContent = '한 번에 볼 양을 선택하세요';
+  countDropdownArea.className = 'countDropdownArea';
+
   const countDropdown = document.createElement('select');
   countDropdown.id = 'countDropdown';
   countDropdown.className = 'countDropdown';
@@ -25,7 +30,8 @@ function countDropdown() {
   });
 
   countDropdown.addEventListener('change', countDropdownButton);
-  root.appendChild(countDropdown);
+  countDropdownArea.appendChild(countDropdown);
+  root.appendChild(countDropdownArea);
 };
 
 function countDropdownButton(event) {
@@ -54,20 +60,23 @@ function drawSortIcon(index) {
 function changeSortState(event) {
   console.log(`${event.currentTarget.id}의 정렬 상태를 변경합니다.`);
   const targetIndex = Number(event.currentTarget.id.split('-')[1]);
-  console.log(targetIndex)
 
   for (let i = 0; i < 4; i++) {
+
     if (i === targetIndex) {
       sortState[i] = (sortState[i] + 1) % 3;
       const tableHeadItem = document.getElementById(`tableHeadItemName-${i}`);
-      tableHeadItem.className += ' head-highlight'
+
+      if (sortState[i] !== 0) {
+        tableHeadItem.classList.add('head-highlight');
+      } else {
+        tableHeadItem.classList.remove('head-highlight');
+      };
     } else {
       sortState[i] = 0
       const tableHeadItem = document.getElementById(`tableHeadItemName-${i}`);
-      tableHeadItem.classList.remove('head-highlight')
+      tableHeadItem.classList.remove('head-highlight');
     };
-
-    
 
     drawSortIcon(i);
   };

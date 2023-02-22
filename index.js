@@ -40,18 +40,22 @@ function changePage(clickedPage) {
 
 function changePer(changedPer) {
   console.log(`바꾼 표시개수 : ${changedPer}`);
-
   per = changedPer;
-  drawTable(tableData, 0, per);
+  currentPage = 1;
+
+  drawTable(tableData, (currentPage - 1) * per, currentPage * per);
   removePagination();
-  pagination(tableData, per);
+  pagination(tableData, per, currentPage);
 };
 
 function dataSort(sortedData) {
   tableData = sortedData;
-  console.log('변경한 데이터');
-  console.log(tableData)
+  console.log('데이터 정렬 완료');
+  currentPage = 1;
+
   drawTable(tableData, (currentPage - 1) * per, currentPage * per);
+  removePagination();
+  pagination(tableData, per, currentPage);
 }
 
 init();
